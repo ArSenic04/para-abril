@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c9184a">
+<title>Para Abril 💕</title>
+<meta property="og:title" content="Para Abril 💕">
+<meta property="og:description" content="Tengo algo que preguntarte...">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink-light:#ffe1ea;
+    --pink:#ff8fab;
+    --pink-mid:#ff5d8f;
+    --red:#e0115f;
+    --red-deep:#a4133c;
+    --maroon:#590d22;
+    --white:#fffafb;
+    --shadow: 0 10px 30px rgba(89,13,34,0.25);
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    scroll-behavior:smooth;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(160deg,var(--pink-light) 0%, var(--pink) 45%, var(--red) 100%);
+    color:var(--maroon);
+    overflow-x:hidden;
+  }
+  h1,h2,.script{
+    font-family:'Dancing Script',cursive;
+  }
+  section{
+    min-height:100vh;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:32px 20px 60px;
+    position:relative;
+    z-index:2;
+  }
+
+  /* ---------- floating background stickers ---------- */
+  #stickers{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:1;
+    pointer-events:none;
+  }
+  .sticker{
+    position:absolute;
+    bottom:-10vh;
+    font-size:2rem;
+    opacity:0.85;
+    animation-name:floatUp;
+    animation-timing-function:ease-in;
+    animation-iteration-count:infinite;
+    filter:drop-shadow(0 2px 6px rgba(89,13,34,0.25));
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.9; }
+    50%{ transform:translateY(-55vh) translateX(15px) rotate(15deg); }
+    100%{ transform:translateY(-115vh) translateX(-10px) rotate(-10deg); opacity:0; }
+  }
+
+  /* ---------- shared UI ---------- */
+  .card{
+    background:var(--white);
+    border-radius:26px;
+    padding:28px 22px;
+    box-shadow:var(--shadow);
+    max-width:420px;
+    width:100%;
+  }
+  h1{ font-size:3rem; margin:0 0 8px; color:var(--red-deep); }
+  h2{ font-size:2.3rem; margin:0 0 18px; color:var(--red-deep); }
+  p{ line-height:1.55; font-size:1.05rem; margin:10px 0; }
+  .subtitle{ color:var(--maroon); opacity:0.85; }
+
+  button{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--red),var(--red-deep));
+    color:#fff;
+    font-size:1.15rem;
+    padding:16px 38px;
+    box-shadow:0 8px 20px rgba(160,14,58,0.4);
+    transition:transform .15s ease;
+  }
+  .btn-primary:active{ transform:scale(0.96); }
+
+  /* ---------- translatable text ---------- */
+  .tr{
+    position:relative;
+    cursor:pointer;
+    border-bottom:1.5px dotted rgba(160,14,58,0.45);
+  }
+  .tr .en{
+    display:none;
+    font-style:italic;
+    font-size:0.82em;
+    color:var(--red-deep);
+    opacity:0.85;
+    margin-top:4px;
+  }
+  .tr.show-en .en{ display:block; }
+  @media (hover:hover) and (pointer:fine){
+    .tr:hover::after{
+      content: attr(data-en);
+      position:absolute;
+      left:0; top:100%;
+      margin-top:6px;
+      background:var(--maroon);
+      color:#fff;
+      padding:7px 12px;
+      border-radius:10px;
+      font-size:0.78rem;
+      font-style:italic;
+      width:max-content;
+      max-width:250px;
+      z-index:50;
+      box-shadow:0 6px 16px rgba(0,0,0,0.3);
+    }
+  }
+  .hint{
+    font-size:0.75rem;
+    opacity:0.55;
+    margin-top:14px;
+  }
+
+  /* ---------- question section ---------- */
+  #question .buttons{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    justify-content:center;
+    margin-top:30px;
+    flex-wrap:wrap;
+  }
+  #btnYes{
+    transform:scale(1);
+    transition:transform .25s ease, font-size .25s ease;
+    z-index:5;
+  }
+  #btnNo{
+    background:#fff;
+    color:var(--red-deep);
+    border:2px solid var(--red);
+    padding:14px 30px;
+    font-size:1rem;
+    transition:transform .2s ease;
+  }
+  #guiltMsg{
+    min-height:60px;
+    max-width:340px;
+    margin-top:22px;
+    font-weight:600;
+    color:var(--red-deep);
+  }
+
+  /* ---------- celebration ---------- */
+  #celebration{ display:none; }
+  #celebration.show{ display:flex; }
+  .sticker-grid{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+    margin-top:20px;
+    max-width:360px;
+  }
+  .sticker-grid span{
+    font-size:2.2rem;
+    animation:pop .5s ease both;
+  }
+  @keyframes pop{
+    0%{ transform:scale(0); }
+    70%{ transform:scale(1.2); }
+    100%{ transform:scale(1); }
+  }
+
+  /* ---------- lists (mensajes / razones / datos) ---------- */
+  .list-card{
+    background:var(--white);
+    border-radius:22px;
+    padding:20px;
+    box-shadow:var(--shadow);
+    max-width:420px;
+    width:100%;
+    margin:10px 0;
+    text-align:left;
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .list-card.visible{ opacity:1; transform:translateY(0); }
+  .list-card .tag{
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--red);
+    font-weight:700;
+  }
+  .heart-divider{
+    font-size:1.4rem;
+    margin:14px 0;
+    opacity:0.7;
+  }
+
+  footer{
+    padding:50px 20px 70px;
+    text-align:center;
+  }
+  footer .script{ font-size:2rem; color:var(--red-deep); }
+
+  /* ---------- confetti burst ---------- */
+  .burst-particle{
+    position:fixed;
+    top:50%;
+    left:50%;
+    font-size:1.6rem;
+    pointer-events:none;
+    z-index:100;
+    animation:burst 1.1s ease-out forwards;
+  }
+  @keyframes burst{
+    0%{ transform:translate(-50%,-50%) scale(0.4); opacity:1; }
+    100%{ transform:translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1) rotate(var(--rot)); opacity:0; }
+  }
+
+  .down-arrow{
+    margin-top:34px;
+    font-size:1.6rem;
+    animation:bounce 1.6s infinite;
+    opacity:0.7;
+  }
+  @keyframes bounce{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(10px); }
+  }
+</style>
+</head>
+<body>
+
+<div id="stickers"></div>
+
+<!-- ================= INTRO ================= -->
+<section id="intro">
+  <div class="card">
+    <h1>Para Abril 💕</h1>
+    <p class="subtitle tr" data-en="Someone has something important to ask you...">
+      Alguien tiene algo importante que preguntarte...
+      <span class="en"></span>
+    </p>
+    <button class="btn-primary" id="btnStart">Empezar 💌</button>
+    <p class="hint">✨ toca cualquier texto subrayado para ver la traducción / tap underlined text to see the English translation ✨</p>
+  </div>
+</section>
+
+<!-- ================= QUESTION ================= -->
+<section id="question" style="display:none;">
+  <div class="card">
+    <h2 class="tr" data-en="Abril De Leon, do you love me?">¿Abril De Leon, tú me amas?</h2>
+    <div style="font-size:2.4rem;">🥹💗</div>
+    <div class="buttons">
+      <button class="btn-primary" id="btnYes">Sí 💖</button>
+      <button id="btnNo">No</button>
+    </div>
+    <p id="guiltMsg" class="tr" data-en=""></p>
+  </div>
+</section>
+
+<!-- ================= CELEBRATION ================= -->
+<section id="celebration">
+  <div class="card">
+    <h2 class="tr" data-en="I KNEW IT!">¡LO SABÍA! 🎉</h2>
+    <p class="tr" data-en="I knew you loved me, Abril De Leon. You just made me the happiest person in the world 💕">
+      Sabía que me amabas, Abril De Leon. Acabas de hacerme la persona más feliz del mundo 💕
+      <span class="en"></span>
+    </p>
+    <div class="sticker-grid">
+      <span>😘</span><span>💋</span><span>🥰</span><span>😍</span>
+      <span>💑</span><span>👩‍❤️‍💋‍👨</span><span>💞</span><span>🫶</span>
+      <span>💐</span><span>🌹</span><span>😽</span><span>💌</span>
+    </div>
+    <div class="down-arrow">↓</div>
+  </div>
+</section>
+
+<!-- ================= MENSAJES ESPECIALES ================= -->
+<section id="mensajes">
+  <h2 class="tr" data-en="Messages for you">Mensajes para ti</h2>
+  <div id="mensajesList"></div>
+</section>
+
+<!-- ================= RAZONES ================= -->
+<section id="razones">
+  <h2 class="tr" data-en="Reasons why I love you">Razones por las que te amo</h2>
+  <div id="razonesList"></div>
+</section>
+
+<!-- ================= DATOS ROMÁNTICOS MÉXICO ================= -->
+<section id="datos">
+  <h2 class="tr" data-en="Facts about Mexican love (for the most romantic girl I know)">Datos del amor mexicano 🇲🇽</h2>
+  <div id="datosList"></div>
+</section>
+
+<footer>
+  <div class="script tr" data-en="I love you, today and always">Te amo, hoy y siempre</div>
+  <p class="tr" data-en="Minnesota is far from Mexico, but never far from my heart">
+    Minnesota está lejos de México, pero nunca lejos de mi corazón
+    <span class="en"></span>
+  </p>
+  <div style="font-size:2rem; margin-top:10px;">💕🇲🇽💕</div>
+</footer>
+
+<script>
+/* =====================================================================
+   ✏️  EDITA AQUÍ TUS MENSAJES  —  EDIT YOUR MESSAGES HERE
+   "es" = lo que se muestra en español
+   "en" = la traducción al inglés (se muestra al tocar el texto)
+   Agrega, borra o cambia tantos objetos { es: "...", en: "..." } como quieras.
+===================================================================== */
+
+const MENSAJES = [
+  { es: "PLACEHOLDER: escribe aquí el primer mensaje especial para Abril...", en: "PLACEHOLDER: write the first special message for Abril here..." },
+  { es: "PLACEHOLDER: cuéntale cómo te hace sentir...", en: "PLACEHOLDER: tell her how she makes you feel..." },
+  { es: "PLACEHOLDER: explícale por qué es tan importante para ti...", en: "PLACEHOLDER: explain why she's so important to you..." },
+];
+
+const RAZONES = [
+  { es: "Porque tu sonrisa arregla cualquier día malo.", en: "Because your smile fixes any bad day." },
+  { es: "Porque eres la persona más cariñosa que conozco.", en: "Because you're the most loving person I know." },
+  { es: "Porque contigo hasta las cosas simples se sienten especiales.", en: "Because with you even simple things feel special." },
+  { es: "Porque nunca me canso de hablar contigo.", en: "Because I never get tired of talking to you." },
+  { es: "Porque me haces querer ser mejor cada día.", en: "Because you make me want to be better every day." },
+  { es: "Porque tu risa es mi sonido favorito.", en: "Because your laugh is my favorite sound." },
+];
+
+const DATOS = [
+  { es: "En México, llevar mariachis a cantar bajo la ventana de la persona amada sigue siendo una tradición viva de amor. 🎺💘", en: "In Mexico, bringing mariachis to sing under a loved one's window is still a living tradition of love." },
+  { es: "En muchas familias mexicanas, decir “te quiero” y “te amo” varias veces al día es completamente normal — el amor no se guarda, se dice en voz alta. 🗣️❤️", en: "In many Mexican families, saying 'I love you' several times a day is completely normal — love isn't kept quiet, it's said out loud." },
+  { es: "La frase “eres mi media naranja” muestra cómo la cultura mexicana convierte el amor cotidiano en poesía. 🍊💞", en: "The phrase 'you're my other half (orange)' shows how Mexican culture turns everyday love into poetry." },
+  { es: "El 14 de febrero en México se llama “Día del Amor y la Amistad” — el amor ahí es tan grande que también incluye a los amigos. 🥰🎊", en: "February 14th in Mexico is called 'Day of Love and Friendship' — love there is so big it includes friends too." },
+];
+
+/* ===================================================================== */
+
+const abrilName = "Abril";
+
+/* ---------- floating background stickers ---------- */
+const stickerEmojis = ["💋","😘","🥰","💞","🫶","💑","🌹","💌","😍","💐"];
+const stickerContainer = document.getElementById("stickers");
+for (let i = 0; i < 16; i++) {
+  const el = document.createElement("div");
+  el.className = "sticker";
+  el.textContent = stickerEmojis[i % stickerEmojis.length];
+  el.style.left = (Math.random() * 94) + "vw";
+  el.style.fontSize = (1.4 + Math.random() * 1.6) + "rem";
+  el.style.animationDuration = (9 + Math.random() * 10) + "s";
+  el.style.animationDelay = (Math.random() * 12) + "s";
+  stickerContainer.appendChild(el);
+}
+
+/* ---------- render list sections ---------- */
+function renderList(containerId, items, tagLabel) {
+  const container = document.getElementById(containerId);
+  items.forEach((item, i) => {
+    const card = document.createElement("div");
+    card.className = "list-card";
+    card.innerHTML =
+      `<div class="tag">${tagLabel} ${i + 1}</div>` +
+      `<p class="tr" data-en="${item.en.replace(/"/g, "&quot;")}">${item.es}<span class="en"></span></p>`;
+    container.appendChild(card);
+  });
+}
+renderList("mensajesList", MENSAJES, "Mensaje");
+renderList("razonesList", RAZONES, "Razón");
+renderList("datosList", DATOS, "Dato");
+
+/* ---------- reveal-on-scroll ---------- */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add("visible");
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll(".list-card").forEach(c => observer.observe(c));
+
+/* ---------- tap/hover to translate ---------- */
+document.querySelectorAll(".tr").forEach(el => {
+  const enText = el.getAttribute("data-en");
+  const enSpan = el.querySelector(".en");
+  if (enSpan) enSpan.textContent = enText;
+  el.addEventListener("click", (e) => {
+    e.stopPropagation();
+    el.classList.toggle("show-en");
+  });
+});
+
+/* ---------- intro -> question ---------- */
+document.getElementById("btnStart").addEventListener("click", () => {
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("question").style.display = "flex";
+});
+
+/* ---------- guilt messages + growing Sí button ---------- */
+const guiltMessages = [
+  { es: "¿Estás segura? 🥺", en: "Are you sure?" },
+  { es: "Piénsalo bien antes de romperme el corazón 💔", en: "Think carefully before breaking my heart." },
+  { es: "Mi mamá también te ama, no le hagas esto a ella 😭", en: "My mom loves you too, don't do this to her." },
+  { es: `Estoy literalmente temblando ahora mismo, ${abrilName} 🥶`, en: `I'm literally shaking right now, ${abrilName}.` },
+  { es: "Ok esto ya duele de verdad 😢", en: "Ok this actually hurts now." },
+  { es: "Última oportunidad antes de que llame a mi abuela llorando 👵📞", en: "Last chance before I call my grandma crying." },
+  { es: "El botón de “No” está muy cansado de que lo presiones 😩", en: "The 'No' button is very tired of being pressed." },
+  { es: "En serio, mira lo grande que está el botón de Sí ya 👀", en: "Seriously, look how big the Yes button is already." },
+  { es: "Ok ya entendí la indirecta... pero el Sí sigue esperando ahí 🥲", en: "Ok I got the hint... but the Yes is still waiting right there." },
+  { es: "Mi amor por ti sigue creciendo con cada click, igual que ese botón 💗", en: "My love for you keeps growing with every click, just like that button." },
+];
+let noClicks = 0;
+const btnYes = document.getElementById("btnYes");
+const btnNo = document.getElementById("btnNo");
+const guiltMsgEl = document.getElementById("guiltMsg");
+const MAX_SCALE = 3.2;
+
+btnNo.addEventListener("click", () => {
+  noClicks++;
+  const msg = guiltMessages[Math.min(noClicks - 1, guiltMessages.length - 1)];
+  guiltMsgEl.textContent = msg.es;
+  guiltMsgEl.setAttribute("data-en", msg.en);
+  guiltMsgEl.classList.remove("show-en");
+
+  const scale = Math.min(1 + noClicks * 0.22, MAX_SCALE);
+  btnYes.style.transform = `scale(${scale})`;
+  btnYes.style.fontSize = (1.15 + Math.min(noClicks * 0.05, 0.7)) + "rem";
+
+  const noScale = Math.max(1 - noClicks * 0.05, 0.6);
+  btnNo.style.transform = `scale(${noScale})`;
+});
+
+guiltMsgEl.addEventListener("click", () => {
+  if (guiltMsgEl.textContent) guiltMsgEl.classList.toggle("show-en");
+});
+
+/* ---------- Sí -> celebration + confetti burst ---------- */
+btnYes.addEventListener("click", () => {
+  document.getElementById("question").style.display = "none";
+  const celebration = document.getElementById("celebration");
+  celebration.classList.add("show");
+  celebration.scrollIntoView({ behavior: "smooth" });
+  burstHearts();
+});
+
+function burstHearts() {
+  const emojis = ["💖","💕","💗","😘","🎉","💋","🥰"];
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement("div");
+    p.className = "burst-particle";
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = 120 + Math.random() * 220;
+    p.style.setProperty("--tx", Math.cos(angle) * distance + "px");
+    p.style.setProperty("--ty", Math.sin(angle) * distance + "px");
+    p.style.setProperty("--rot", (Math.random() * 360 - 180) + "deg");
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1200);
+  }
+}
+</script>
+</body>
+</html>
