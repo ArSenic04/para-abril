@@ -154,8 +154,14 @@
   }
   #btnYes{
     transform:scale(1);
-    transition:transform .25s ease, font-size .25s ease;
+    transition:transform .25s ease, font-size .25s ease, opacity .3s ease;
     z-index:5;
+  }
+  #btnYes:disabled{
+    opacity:0.4;
+    filter:grayscale(0.5);
+    cursor:not-allowed;
+    box-shadow:none;
   }
   #btnNo{
     background:#fff;
@@ -165,12 +171,43 @@
     font-size:1rem;
     transition:transform .2s ease;
   }
+  #lockHint{
+    font-size:0.88rem;
+    max-width:320px;
+    margin-top:16px;
+    color:var(--red-deep);
+    font-weight:600;
+  }
   #guiltMsg{
     min-height:60px;
     max-width:340px;
     margin-top:22px;
     font-weight:600;
     color:var(--red-deep);
+  }
+
+  /* ---------- gif slots ---------- */
+  .gif-wrap{
+    margin:14px auto;
+    max-width:260px;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .gif-wrap img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .gif-fallback{
+    display:none;
+    width:100%;
+    height:140px;
+    align-items:center;
+    justify-content:center;
+    font-size:3.2rem;
+    background:linear-gradient(135deg,var(--pink-light),var(--pink));
+    border-radius:20px;
   }
 
   /* ---------- celebration ---------- */
@@ -253,6 +290,43 @@
     0%,100%{ transform:translateY(0); }
     50%{ transform:translateY(10px); }
   }
+
+  /* ---------- scorpio section ---------- */
+  .scorpio-badges{
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    align-items:center;
+    margin:16px 0;
+    flex-wrap:wrap;
+  }
+  .scorpio-badge{
+    background:var(--white);
+    border-radius:18px;
+    padding:14px 18px;
+    box-shadow:var(--shadow);
+    font-size:0.95rem;
+    font-weight:600;
+  }
+  .scorpio-badge .sign{ font-size:2rem; display:block; margin-bottom:4px; }
+
+  /* ---------- distance section ---------- */
+  .distance-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin:18px 0;
+    flex-wrap:wrap;
+  }
+  .distance-pill{
+    background:var(--white);
+    border-radius:16px;
+    padding:12px 16px;
+    box-shadow:var(--shadow);
+    font-weight:600;
+    font-size:0.95rem;
+  }
 </style>
 </head>
 <body>
@@ -277,8 +351,15 @@
   <div class="card">
     <h2 class="tr" data-en="Abril De Leon, do you love me?">¿Abril De Leon, tú me amas?</h2>
     <div style="font-size:2.4rem;">🥹💗</div>
+    <div class="gif-wrap">
+      <img src="gifs/cuddle.gif" alt="cuddle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="gif-fallback">🥰💞</div>
+    </div>
+    <p id="lockHint" class="tr" data-en="Curious? Press 'No' first, just to see what happens 👀">
+      ¿Curiosa? Presiona “No” primero, solo para ver qué pasa 👀
+    </p>
     <div class="buttons">
-      <button class="btn-primary" id="btnYes">Sí 💖</button>
+      <button class="btn-primary" id="btnYes" disabled>Sí 💖</button>
       <button id="btnNo">No</button>
     </div>
     <p id="guiltMsg" class="tr" data-en=""></p>
@@ -293,6 +374,10 @@
       Sabía que me amabas, Abril De Leon. Acabas de hacerme la persona más feliz del mundo 💕
       <span class="en"></span>
     </p>
+    <div class="gif-wrap">
+      <img src="gifs/kiss.gif" alt="kiss" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="gif-fallback">😘💋</div>
+    </div>
     <div class="sticker-grid">
       <span>😘</span><span>💋</span><span>🥰</span><span>😍</span>
       <span>💑</span><span>👩‍❤️‍💋‍👨</span><span>💞</span><span>🫶</span>
@@ -314,19 +399,58 @@
   <div id="razonesList"></div>
 </section>
 
+<!-- ================= SCORPIO ================= -->
+<section id="scorpio">
+  <h2 class="tr" data-en="Scorpio + Scorpio">Escorpio + Escorpio ♏♏</h2>
+  <div class="scorpio-badges">
+    <div class="scorpio-badge"><span class="sign">♏</span>Abril</div>
+    <div class="scorpio-badge"><span class="sign">💞</span></div>
+    <div class="scorpio-badge"><span class="sign">♏</span>Yo</div>
+  </div>
+  <div id="scorpioList"></div>
+  <div class="gif-wrap">
+    <img src="gifs/cuddle2.gif" alt="cuddle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="gif-fallback">🥹💗</div>
+  </div>
+</section>
+
 <!-- ================= DATOS ROMÁNTICOS MÉXICO ================= -->
 <section id="datos">
   <h2 class="tr" data-en="Facts about Mexican love (for the most romantic girl I know)">Datos del amor mexicano 🇲🇽</h2>
   <div id="datosList"></div>
 </section>
 
-<footer>
-  <div class="script tr" data-en="I love you, today and always">Te amo, hoy y siempre</div>
-  <p class="tr" data-en="Minnesota is far from Mexico, but never far from my heart">
-    Minnesota está lejos de México, pero nunca lejos de mi corazón
+<!-- ================= DATOS ROMÁNTICOS INDIA ================= -->
+<section id="datosIndia">
+  <h2 class="tr" data-en="Facts about Indian love (from my culture, for you)">Datos del amor en la India 🇮🇳</h2>
+  <div id="datosIndiaList"></div>
+</section>
+
+<!-- ================= DISTANCIA ================= -->
+<section id="distancia">
+  <h2 class="tr" data-en="Montreal to Minnesota">Montreal a Minnesota</h2>
+  <div class="gif-wrap">
+    <img src="gifs/hug.gif" alt="hug" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="gif-fallback">🤗💕</div>
+  </div>
+  <div class="distance-row">
+    <div class="distance-pill">🇨🇦 Montreal</div>
+    <div style="font-size:1.6rem;">✈️💌</div>
+    <div class="distance-pill">🇺🇸 Minnesota</div>
+  </div>
+  <p class="tr" data-en="About 1,700 km apart — far on a map, but never far in my heart">
+    Cerca de 1,700 km de distancia — lejos en el mapa, pero nunca lejos de mi corazón
     <span class="en"></span>
   </p>
-  <div style="font-size:2rem; margin-top:10px;">💕🇲🇽💕</div>
+</section>
+
+<footer>
+  <div class="script tr" data-en="I love you, today and always">Te amo, hoy y siempre</div>
+  <p class="tr" data-en="Montreal and Minnesota are far apart, but never far from my heart">
+    Montreal y Minnesota están lejos, pero nunca lejos de mi corazón
+    <span class="en"></span>
+  </p>
+  <div style="font-size:2rem; margin-top:10px;">💕🇨🇦🇺🇸🇲🇽🇮🇳💕</div>
 </footer>
 
 <script>
@@ -357,6 +481,20 @@ const DATOS = [
   { es: "En muchas familias mexicanas, decir “te quiero” y “te amo” varias veces al día es completamente normal — el amor no se guarda, se dice en voz alta. 🗣️❤️", en: "In many Mexican families, saying 'I love you' several times a day is completely normal — love isn't kept quiet, it's said out loud." },
   { es: "La frase “eres mi media naranja” muestra cómo la cultura mexicana convierte el amor cotidiano en poesía. 🍊💞", en: "The phrase 'you're my other half (orange)' shows how Mexican culture turns everyday love into poetry." },
   { es: "El 14 de febrero en México se llama “Día del Amor y la Amistad” — el amor ahí es tan grande que también incluye a los amigos. 🥰🎊", en: "February 14th in Mexico is called 'Day of Love and Friendship' — love there is so big it includes friends too." },
+];
+
+const DATOS_INDIA = [
+  { es: "En la India, muchas historias de amor se comparan con las de “Radha y Krishna” — un amor tan profundo que se volvió leyenda. 💛🦚", en: "In India, many love stories are compared to that of 'Radha and Krishna' — a love so deep it became legend." },
+  { es: "En la poesía y el cine indio, decirle a alguien “tú eres mi mitad” (“tum meri zindagi ho”) es una forma común y hermosa de expresar amor profundo. 🎬💞", en: "In Indian poetry and cinema, telling someone 'you are my other half' ('tum meri zindagi ho') is a common and beautiful way to express deep love." },
+  { es: "La henna (mehndi) se usa en celebraciones de amor y compromiso — se dice que cuanto más oscuro el color, más fuerte es el amor. 🌿🤎", en: "Henna (mehndi) is used in love and engagement celebrations — it's said the darker the color, the stronger the love." },
+  { es: "En muchas bodas indias, la ceremonia incluye siete pasos y siete promesas — un compromiso de caminar juntos toda la vida. 👣💍", en: "In many Indian weddings, the ceremony includes seven steps and seven vows — a promise to walk together for life." },
+];
+
+const SCORPIO = [
+  { es: "Los escorpio son conocidos por amar con una intensidad total — cuando aman, lo hacen con el corazón entero. 🔥♏", en: "Scorpios are known for loving with total intensity — when they love, they do it with their whole heart." },
+  { es: "Dos escorpios juntos crean una conexión emocional muy profunda, casi como si se leyeran la mente. 🔮💫", en: "Two Scorpios together create a very deep emotional connection, almost like they can read each other's minds." },
+  { es: "La lealtad es todo para un escorpio — y entre dos, la confianza se vuelve inquebrantable. 🛡️💗", en: "Loyalty is everything to a Scorpio — and between two, trust becomes unbreakable." },
+  { es: "Dicen que Escorpio + Escorpio es una de las combinaciones más apasionadas del zodiaco... y tú ya lo sabías. 😏♏♏", en: "They say Scorpio + Scorpio is one of the most passionate combinations in the zodiac... and you already knew that." },
 ];
 
 /* ===================================================================== */
@@ -392,6 +530,8 @@ function renderList(containerId, items, tagLabel) {
 renderList("mensajesList", MENSAJES, "Mensaje");
 renderList("razonesList", RAZONES, "Razón");
 renderList("datosList", DATOS, "Dato");
+renderList("datosIndiaList", DATOS_INDIA, "Dato");
+renderList("scorpioList", SCORPIO, "♏");
 
 /* ---------- reveal-on-scroll ---------- */
 const observer = new IntersectionObserver((entries) => {
@@ -435,10 +575,17 @@ let noClicks = 0;
 const btnYes = document.getElementById("btnYes");
 const btnNo = document.getElementById("btnNo");
 const guiltMsgEl = document.getElementById("guiltMsg");
+const lockHintEl = document.getElementById("lockHint");
 const MAX_SCALE = 3.2;
 
 btnNo.addEventListener("click", () => {
   noClicks++;
+
+  if (noClicks === 1) {
+    btnYes.disabled = false;
+    lockHintEl.style.display = "none";
+  }
+
   const msg = guiltMessages[Math.min(noClicks - 1, guiltMessages.length - 1)];
   guiltMsgEl.textContent = msg.es;
   guiltMsgEl.setAttribute("data-en", msg.en);
