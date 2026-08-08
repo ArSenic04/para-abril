@@ -5,6 +5,8 @@ El sitio busca estos 4 archivos en esta carpeta:
 - `cuddle.gif` — en la sección de la pregunta
 - `kiss.gif` — en la sección de celebración
 - `cuddle2.gif` — en la sección de Escorpio
+- `cuddle3.gif` — en la sección "Solo para nosotros"
+- `kiss2.gif` — en la sección "Solo para nosotros"
 - `hug.gif` — en la sección de distancia (Montreal ↔ Minnesota)
 
 Si un archivo no existe, el sitio muestra automáticamente un emoji grande en su lugar — nada se rompe.

@@ -414,6 +414,20 @@
   </div>
 </section>
 
+<!-- ================= SOLO PARA NOSOTROS ================= -->
+<section id="nosotros">
+  <h2 class="tr" data-en="Just for us 😏">Solo para nosotros 😏</h2>
+  <div class="gif-wrap">
+    <img src="gifs/cuddle3.gif" alt="cuddle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="gif-fallback">😏🔥</div>
+  </div>
+  <div id="nosotrosList"></div>
+  <div class="gif-wrap">
+    <img src="gifs/kiss2.gif" alt="kiss" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="gif-fallback">💋😘</div>
+  </div>
+</section>
+
 <!-- ================= DATOS ROMÁNTICOS MÉXICO ================= -->
 <section id="datos">
   <h2 class="tr" data-en="Facts about Mexican love (for the most romantic girl I know)">Datos del amor mexicano 🇲🇽</h2>
@@ -497,6 +511,15 @@ const SCORPIO = [
   { es: "Dicen que Escorpio + Escorpio es una de las combinaciones más apasionadas del zodiaco... y tú ya lo sabías. 😏♏♏", en: "They say Scorpio + Scorpio is one of the most passionate combinations in the zodiac... and you already knew that." },
 ];
 
+const NOSOTROS = [
+  { es: "No puedo dejar de pensar en la última vez que te abracé... se sintió demasiado bien. 😏", en: "I can't stop thinking about the last time I held you... it felt too good." },
+  { es: "Eres la persona más sexy que conozco, y ni siquiera lo intentas. 🔥", en: "You're the sexiest person I know, and you don't even try." },
+  { es: "Cuenta los días conmigo hasta que pueda abrazarte otra vez... tengo planes para esos brazos. 😌💋", en: "Count the days with me until I can hold you again... I have plans for those arms." },
+  { es: "Sabes exactamente el efecto que tienes en mí, ¿verdad? 😏💗", en: "You know exactly the effect you have on me, right?" },
+  { es: "Cada vez que me mandas una foto tuya arruinas por completo mi concentración. 👀🔥", en: "Every time you send me a photo of yourself you completely ruin my focus." },
+  { es: "Cuando por fin nos veamos, no te voy a soltar por un rato largo. 😌🫂", en: "When we finally see each other, I'm not letting go of you for a good long while." },
+];
+
 /* ===================================================================== */
 
 const abrilName = "Abril";
@@ -532,6 +555,7 @@ renderList("razonesList", RAZONES, "Razón");
 renderList("datosList", DATOS, "Dato");
 renderList("datosIndiaList", DATOS_INDIA, "Dato");
 renderList("scorpioList", SCORPIO, "♏");
+renderList("nosotrosList", NOSOTROS, "😏");
 
 /* ---------- reveal-on-scroll ---------- */
 const observer = new IntersectionObserver((entries) => {
