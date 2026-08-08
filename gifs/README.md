@@ -1,15 +1,16 @@
 # Cómo agregar tus GIFs
 
-El sitio busca estos 4 archivos en esta carpeta:
+El sitio busca estos archivos en esta carpeta:
 
-- `cuddle.gif` — en la sección de la pregunta
+- `Blow_kiss.gif` — en la sección de la pregunta
 - `kiss.gif` — en la sección de celebración
-- `cuddle2.gif` — en la sección de Escorpio
-- `cuddle3.gif` — en la sección "Solo para nosotros"
-- `kiss2.gif` — en la sección "Solo para nosotros"
-- `hug.gif` — en la sección de distancia (Montreal ↔ Minnesota)
+- `cuddle_love.gif` — en la sección de Escorpio
+- `where_tonow.gif` — en la sección de distancia (Montreal ↔ Minnesota)
+- `intense_gif.gif`, `intense_gif1.gif` ... `intense_gif6.gif` — en la galería con candado "Mis favoritos" (solo se ven después de responder las preguntas)
 
 Si un archivo no existe, el sitio muestra automáticamente un emoji grande en su lugar — nada se rompe.
+
+Para agregar más GIFs a la galería "Mis favoritos", solo pon el archivo aquí y agrega su nombre a la lista `INTENSE_GIFS` en `index.html`.
 
 ## Pasos para agregar un GIF real (gratis, sin API keys)
 

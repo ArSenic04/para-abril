@@ -327,6 +327,29 @@
     font-weight:600;
     font-size:0.95rem;
   }
+
+  /* ---------- gated favorites gallery ---------- */
+  #gateQuestion{
+    font-size:1.3rem;
+    font-weight:600;
+    color:var(--red-deep);
+    margin-bottom:6px;
+  }
+  #gateConvince{
+    min-height:40px;
+    font-weight:600;
+    color:var(--red-deep);
+    font-size:0.95rem;
+  }
+  .gif-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    max-width:420px;
+    width:100%;
+    margin-top:10px;
+  }
+  .gif-grid .gif-wrap{ margin:0; max-width:none; }
 </style>
 </head>
 <body>
@@ -352,7 +375,7 @@
     <h2 class="tr" data-en="Abril De Leon, do you love me?">¿Abril De Leon, tú me amas?</h2>
     <div style="font-size:2.4rem;">🥹💗</div>
     <div class="gif-wrap">
-      <img src="gifs/cuddle.gif" alt="cuddle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <img src="gifs/Blow_kiss.gif" alt="cuddle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
       <div class="gif-fallback">🥰💞</div>
     </div>
     <p id="lockHint" class="tr" data-en="Curious? Press 'No' first, just to see what happens 👀">
@@ -409,23 +432,23 @@
   </div>
   <div id="scorpioList"></div>
   <div class="gif-wrap">
-    <img src="gifs/cuddle2.gif" alt="cuddle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <img src="gifs/cuddle_love.gif" alt="cuddle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
     <div class="gif-fallback">🥹💗</div>
   </div>
 </section>
 
-<!-- ================= SOLO PARA NOSOTROS ================= -->
-<section id="nosotros">
-  <h2 class="tr" data-en="Just for us 😏">Solo para nosotros 😏</h2>
-  <div class="gif-wrap">
-    <img src="gifs/cuddle3.gif" alt="cuddle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    <div class="gif-fallback">😏🔥</div>
+<!-- ================= MIS FAVORITOS (galería con candado) ================= -->
+<section id="favoritos">
+  <h2 class="tr" data-en="My favorites 😏">Mis favoritos 😏</h2>
+  <div class="card" id="gateCard">
+    <p id="gateQuestion" class="tr"></p>
+    <div class="buttons">
+      <button class="btn-primary" id="gateYesBtn">Sí</button>
+      <button id="gateNoBtn">No</button>
+    </div>
+    <p id="gateConvince" class="tr"></p>
   </div>
-  <div id="nosotrosList"></div>
-  <div class="gif-wrap">
-    <img src="gifs/kiss2.gif" alt="kiss" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    <div class="gif-fallback">💋😘</div>
-  </div>
+  <div id="gateGallery" class="gif-grid" style="display:none;"></div>
 </section>
 
 <!-- ================= DATOS ROMÁNTICOS MÉXICO ================= -->
@@ -444,7 +467,7 @@
 <section id="distancia">
   <h2 class="tr" data-en="Montreal to Minnesota">Montreal a Minnesota</h2>
   <div class="gif-wrap">
-    <img src="gifs/hug.gif" alt="hug" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <img src="gifs/where_tonow.gif" alt="hug" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
     <div class="gif-fallback">🤗💕</div>
   </div>
   <div class="distance-row">
@@ -511,13 +534,19 @@ const SCORPIO = [
   { es: "Dicen que Escorpio + Escorpio es una de las combinaciones más apasionadas del zodiaco... y tú ya lo sabías. 😏♏♏", en: "They say Scorpio + Scorpio is one of the most passionate combinations in the zodiac... and you already knew that." },
 ];
 
-const NOSOTROS = [
-  { es: "No puedo dejar de pensar en la última vez que te abracé... se sintió demasiado bien. 😏", en: "I can't stop thinking about the last time I held you... it felt too good." },
-  { es: "Eres la persona más sexy que conozco, y ni siquiera lo intentas. 🔥", en: "You're the sexiest person I know, and you don't even try." },
-  { es: "Cuenta los días conmigo hasta que pueda abrazarte otra vez... tengo planes para esos brazos. 😌💋", en: "Count the days with me until I can hold you again... I have plans for those arms." },
-  { es: "Sabes exactamente el efecto que tienes en mí, ¿verdad? 😏💗", en: "You know exactly the effect you have on me, right?" },
-  { es: "Cada vez que me mandas una foto tuya arruinas por completo mi concentración. 👀🔥", en: "Every time you send me a photo of yourself you completely ruin my focus." },
-  { es: "Cuando por fin nos veamos, no te voy a soltar por un rato largo. 😌🫂", en: "When we finally see each other, I'm not letting go of you for a good long while." },
+/* Preguntas para desbloquear la galería "Mis favoritos".
+   Cada pregunta tiene una respuesta "Sí" que avanza, y mensajes de
+   "convencimiento" que aparecen si presiona "No" (se repiten en bucle). */
+const GATE_QUESTIONS = [
+  { es: "¿Tienes ganas de verme? 😏", en: "Do you feel like seeing me?" },
+  { es: "¿Quieres estar cerca de mí ahora mismo? 🥺", en: "Do you want to be close to me right now?" },
+  { es: "¿Lista para ver mis favoritos? 👀🔥", en: "Ready to see my favorites?" },
+];
+const GATE_CONVINCE = [
+  { es: "Vamos... sabes que sí quieres 😌", en: "Come on... you know you want to." },
+  { es: "No me hagas rogar demasiado 🥺", en: "Don't make me beg too much." },
+  { es: "Ok, una vez más, por favor 👉👈", en: "Ok, one more time, please." },
+  { es: "Estás haciendo esto muy difícil para mí 😩", en: "You're making this really hard for me." },
 ];
 
 /* ===================================================================== */
@@ -555,7 +584,6 @@ renderList("razonesList", RAZONES, "Razón");
 renderList("datosList", DATOS, "Dato");
 renderList("datosIndiaList", DATOS_INDIA, "Dato");
 renderList("scorpioList", SCORPIO, "♏");
-renderList("nosotrosList", NOSOTROS, "😏");
 
 /* ---------- reveal-on-scroll ---------- */
 const observer = new IntersectionObserver((entries) => {
@@ -651,6 +679,58 @@ function burstHearts() {
     setTimeout(() => p.remove(), 1200);
   }
 }
+
+/* ---------- gated "Mis favoritos" gallery ---------- */
+const INTENSE_GIFS = [
+  "intense_gif.gif","intense_gif1.gif","intense_gif2.gif","intense_gif3.gif",
+  "intense_gif4.gif","intense_gif5.gif","intense_gif6.gif",
+];
+
+let gateStep = 0;
+let gateConvinceIndex = 0;
+const gateQuestionEl = document.getElementById("gateQuestion");
+const gateConvinceEl = document.getElementById("gateConvince");
+const gateYesBtn = document.getElementById("gateYesBtn");
+const gateNoBtn = document.getElementById("gateNoBtn");
+const gateCard = document.getElementById("gateCard");
+const gateGallery = document.getElementById("gateGallery");
+
+function setTrContent(el, es, en) {
+  el.innerHTML = `${es}<span class="en">${en}</span>`;
+  el.setAttribute("data-en", en);
+  el.classList.remove("show-en");
+}
+
+function showGateQuestion() {
+  const q = GATE_QUESTIONS[gateStep];
+  setTrContent(gateQuestionEl, q.es, q.en);
+  gateConvinceEl.innerHTML = "";
+}
+showGateQuestion();
+
+gateNoBtn.addEventListener("click", () => {
+  const msg = GATE_CONVINCE[gateConvinceIndex % GATE_CONVINCE.length];
+  gateConvinceIndex++;
+  setTrContent(gateConvinceEl, msg.es, msg.en);
+});
+
+gateYesBtn.addEventListener("click", () => {
+  gateStep++;
+  if (gateStep < GATE_QUESTIONS.length) {
+    showGateQuestion();
+  } else {
+    gateCard.style.display = "none";
+    gateGallery.style.display = "grid";
+    INTENSE_GIFS.forEach(name => {
+      const wrap = document.createElement("div");
+      wrap.className = "gif-wrap";
+      wrap.innerHTML =
+        `<img src="gifs/${name}" alt="favorito" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` +
+        `<div class="gif-fallback">💋🔥</div>`;
+      gateGallery.appendChild(wrap);
+    });
+  }
+});
 </script>
 </body>
 </html>
