@@ -35,16 +35,19 @@
     font-family:'Dancing Script',cursive;
   }
   section{
-    min-height:100vh;
     width:100%;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:32px 20px 60px;
+    padding:32px 20px;
     position:relative;
     z-index:2;
+  }
+  section.full{
+    min-height:100vh;
+    padding:32px 20px 60px;
   }
 
   /* ---------- floating background stickers ---------- */
@@ -357,7 +360,7 @@
 <div id="stickers"></div>
 
 <!-- ================= INTRO ================= -->
-<section id="intro">
+<section id="intro" class="full">
   <div class="card">
     <h1>Para Abril 💕</h1>
     <p class="subtitle tr" data-en="Someone has something important to ask you...">
@@ -370,7 +373,7 @@
 </section>
 
 <!-- ================= QUESTION ================= -->
-<section id="question" style="display:none;">
+<section id="question" class="full" style="display:none;">
   <div class="card">
     <h2 class="tr" data-en="Abril De Leon, do you love me?">¿Abril De Leon, tú me amas?</h2>
     <div style="font-size:2.4rem;">🥹💗</div>
@@ -390,7 +393,7 @@
 </section>
 
 <!-- ================= CELEBRATION ================= -->
-<section id="celebration">
+<section id="celebration" class="full">
   <div class="card">
     <h2 class="tr" data-en="I KNEW IT!">¡LO SABÍA! 🎉</h2>
     <p class="tr" data-en="I knew you loved me, Abril De Leon. You just made me the happiest person in the world 💕">
@@ -622,10 +625,10 @@ document.getElementById("btnStart").addEventListener("click", () => {
 const guiltMessages = [
   { es: "¿Estás segura? 🥺", en: "Are you sure?" },
   { es: "Piénsalo bien antes de romperme el corazón 💔", en: "Think carefully before breaking my heart." },
-  { es: "Mi mamá también te ama, no le hagas esto a ella 😭", en: "My mom loves you too, don't do this to her." },
+  { es: "No puedo vivir sin ti 😭", en: "I can't live without you" },
   { es: `Estoy literalmente temblando ahora mismo, ${abrilName} 🥶`, en: `I'm literally shaking right now, ${abrilName}.` },
   { es: "Ok esto ya duele de verdad 😢", en: "Ok this actually hurts now." },
-  { es: "Última oportunidad antes de que llame a mi abuela llorando 👵📞", en: "Last chance before I call my grandma crying." },
+  { es: "Última oportunidad Abril, no sobreviviré sin ti", en: "Last chance Abril i will not survive without you" },
   { es: "El botón de “No” está muy cansado de que lo presiones 😩", en: "The 'No' button is very tired of being pressed." },
   { es: "En serio, mira lo grande que está el botón de Sí ya 👀", en: "Seriously, look how big the Yes button is already." },
   { es: "Ok ya entendí la indirecta... pero el Sí sigue esperando ahí 🥲", en: "Ok I got the hint... but the Yes is still waiting right there." },
